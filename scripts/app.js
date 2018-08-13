@@ -1,5 +1,5 @@
-//创建app应用模块
-var yike=angular.module('yike',[]);
+//创建app应用模块,依赖模块:控制器模块ctrls,路由模块
+var yike=angular.module('yike',['ctrls','ngRoute']);
 //调用run方法,该方法的作用是,当模块创建好之后就可以直接执行
 //该模块依赖的是根作用域,子作用域通常是与控制器绑定的
 yike.run(['$rootScope',function($rootScope){
@@ -29,8 +29,33 @@ yike.run(['$rootScope',function($rootScope){
         dd[i].style.transform='translate(-100%)';
       }
     }
-
-
-  };
-
+  }
+}]);
+//修复锚点值的改变
+yike.config(['$locationProvider',function($locationProvider){
+  $locationProvider.hashPrefix('');
+}]);
+//配置路由
+yike.config(['$routeProvider',function($routeProider){
+  $routeProider.when('/',{
+    redirectTo:'/index' //跳转到/index处理
+  }).when('/index',{
+    templateUrl:'./views/test.html', //将要在ng-view区域显示的视图
+    controller:'index' //调用index控制器
+  }).when('/older',{
+    templateUrl:'./views/test.html',
+    controller:'older'
+  }).when('/author',{
+    templateUrl:'./views/test.html',
+    controller:'author'
+  }).when('/category',{
+    templateUrl:'./views/test.html',
+    controller:'category'
+  }).when('/favourite',{
+    templateUrl:'./views/test.html',
+    controller:'favourite'
+  }).when('/settings',{
+    templateUrl:'./views/test.html',
+    controller:'settings'
+  })
 }]);
